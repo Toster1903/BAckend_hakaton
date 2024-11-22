@@ -61,23 +61,26 @@ document.addEventListener('DOMContentLoaded', () => {
         fileInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (file) {
-                const title = document.getElementById('fileTitle').value;
-                const description = document.getElementById('fileDescription').value;
+                // Показать индикатор загрузки
+                const loader = document.getElementById('loader');
+                loader.style.display = 'block';
 
-                if (title && description) {
-                    const loader = document.getElementById('loader');
-                    loader.style.display = 'block'; // Показать индикатор загрузки
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    loader.style.display = 'none'; // Скрыть индикатор загрузки после завершения чтения
 
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        loader.style.display = 'none'; // Скрыть индикатор загрузки после загрузки
+                    // Запросить у пользователя название и описание для загруженного файла
+                    const title = prompt("Введите название для загружаемой фотографии:");
+                    const description = prompt("Введите описание для загружаемой фотографии:");
 
+                    if (title && description) {
+                        // Добавить фото в галерею
                         addImageToGallery(e.target.result, title, description);
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    alert('Пожалуйста, введите название и описание для файла.');
-                }
+                    } else {
+                        alert('Название и описание являются обязательными для добавления в галерею.');
+                    }
+                };
+                reader.readAsDataURL(file);
             } else {
                 alert('Пожалуйста, выберите файл.');
             }
