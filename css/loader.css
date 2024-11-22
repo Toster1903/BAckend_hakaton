@@ -1,0 +1,39 @@
+/* Индикатор загрузки */
+.loader {
+    --duration: 3s;
+    --primary: rgba(39, 94, 254, 1);
+    --primary-light: #2f71ff;
+    --primary-rgba: rgba(39, 94, 254, 0);
+    width: 200px;
+    height: 320px;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.loader .box,
+.loader .ground {
+    /* здесь ваш код для анимации, который вы указали */
+}
+
+/* Поля ввода для названия и описания */
+.input {
+    margin-top: 1rem;
+    border-radius: 10px;
+    outline: 2px solid #00a6fb;
+    border: 0;
+    font-family: "Montserrat", sans-serif;
+    background-color: #d6f1ff;
+    outline-offset: 3px;
+    padding: 10px 12.5px;
+    transition: all 0.2s ease;
+    width: 250px;
+}
+
+.input:hover {
+    background-color: #fff;
+}
+
+.input:focus {
+    outline-offset: -6px;
+    background-color: #d6f1ff;
+}

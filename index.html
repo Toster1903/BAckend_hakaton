@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/ImageUpload.css">
     <link rel="stylesheet" href="css/Card.css">
     <link rel="stylesheet" href="css/Gallery.css">
-
+    <link rel="stylesheet" href="css/loader.css"> <!-- Подключение файла со стилями загрузчика -->
 </head>
 <body>
 <!-- Вкладки -->
@@ -33,6 +33,10 @@
         </div>
     </div>
 </div>
+<div id="imageModal" class="modal" style="display: none;">
+    <span id="closeModal" class="close">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
 
 <!-- Вкладка Загрузка Фото -->
 <div id="upload" class="tab-content" style="display: none;">
@@ -50,6 +54,23 @@
             <p>Click to upload</p>
         </button>
         <input id="file" type="file" style="display: none;">
+
+        <!-- Поля для названия и описания -->
+        <input class="input" id="fileTitle" placeholder="Название фотографии" type="text">
+        <input class="input" id="fileDescription" placeholder="Описание фотографии" type="text">
+
+        <!-- Индикатор загрузки -->
+        <div id="loader" class="loader" style="display: none;">
+            <div class="box box0"><div></div></div>
+            <div class="box box1"><div></div></div>
+            <div class="box box2"><div></div></div>
+            <div class="box box3"><div></div></div>
+            <div class="box box4"><div></div></div>
+            <div class="box box5"><div></div></div>
+            <div class="box box6"><div></div></div>
+            <div class="box box7"><div></div></div>
+            <div class="ground"><div></div></div>
+        </div>
     </div>
 </div>
 

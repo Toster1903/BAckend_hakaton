@@ -9,21 +9,21 @@ function openTab(tabName) {
         content.classList.remove('active');
     });
 
-    // Убираем класс 'active' со всех кнопок вкладок
-    const tabButtons = document.querySelectorAll('.tabs .btn');
+    // Убираем класс 'active' у всех кнопок
+    const tabButtons = document.querySelectorAll('.btn');
     tabButtons.forEach((button) => {
         button.classList.remove('active');
     });
 
-    // Показываем выбранную вкладку и добавляем класс 'active'
+    // Показываем выбранную вкладку и делаем кнопку активной
     const tabContent = document.getElementById(tabName);
     if (tabContent) {
         tabContent.style.display = 'block';
         tabContent.classList.add('active');
     }
 
-    // Добавляем класс 'active' к соответствующей кнопке вкладки
-    const activeButton = document.querySelector(`.tabs .btn#${tabName}Tab`);
+    // Добавляем класс 'active' на кнопку соответствующей вкладки
+    const activeButton = document.querySelector(`#${tabName}Tab`);
     if (activeButton) {
         activeButton.classList.add('active');
     }
@@ -32,7 +32,6 @@ function openTab(tabName) {
 document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM полностью загружен и разобран");
 
-    // Добавление обработчиков на кнопки вкладок
     const galleryTabButton = document.getElementById('galleryTab');
     const uploadTabButton = document.getElementById('uploadTab');
 
@@ -43,42 +42,63 @@ document.addEventListener('DOMContentLoaded', () => {
         uploadTabButton.addEventListener('click', () => openTab('upload'));
     }
 
-    // Показать вкладку галереи по умолчанию
     openTab('gallery');
 
-    // Добавляем обработчик на клик по кнопке загрузки фото
     const uploadButton = document.getElementById('uploadButton');
     if (uploadButton) {
-        console.log("Кнопка загрузки найдена");
         uploadButton.addEventListener('click', () => {
-            console.log("Кнопка загрузки нажата");
-
             const fileInput = document.getElementById('file');
             if (fileInput) {
-                fileInput.click(); // Инициируем клик по скрытому инпуту
+                fileInput.click();
             } else {
                 console.error("Не удалось найти элемент с id 'file'");
             }
         });
-    } else {
-        console.error("Не удалось найти кнопку с id 'uploadButton'");
     }
 
-    // Обработчик изменения файла (выбор файла)
     const fileInput = document.getElementById('file');
     if (fileInput) {
-        console.log("Инпут файла найден");
         fileInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (file) {
-                alert(`Вы загрузили файл: ${file.name}`);
-                console.log(`Файл выбран: ${file.name}`);
+                const title = document.getElementById('fileTitle').value;
+                const description = document.getElementById('fileDescription').value;
+
+                if (title && description) {
+                    const loader = document.getElementById('loader');
+                    loader.style.display = 'block'; // Показать индикатор загрузки
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        loader.style.display = 'none'; // Скрыть индикатор загрузки после загрузки
+
+                        addImageToGallery(e.target.result, title, description);
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    alert('Пожалуйста, введите название и описание для файла.');
+                }
             } else {
                 alert('Пожалуйста, выберите файл.');
-                console.warn("Файл не был выбран");
             }
         });
-    } else {
-        console.error("Не удалось найти элемент с id 'file'");
     }
 });
+
+// Функция для добавления изображения в галерею
+function addImageToGallery(imageSrc, title, description) {
+    const gallery = document.querySelector('.gallery');
+
+    const card = document.createElement('div');
+    card.classList.add('card');
+
+    card.innerHTML = `
+        <img src="${imageSrc}" alt="${title}" class="card__image">
+        <div class="card__content">
+            <p class="card__title">${title}</p>
+            <p class="card__description">${description}</p>
+        </div>
+    `;
+
+    gallery.appendChild(card);
+}
