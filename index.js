@@ -30,6 +30,7 @@ function openTab(tabName) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+
     console.log("DOM полностью загружен и разобран");
 
     const galleryTabButton = document.getElementById('galleryTab');
@@ -61,20 +62,17 @@ document.addEventListener('DOMContentLoaded', () => {
         fileInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (file) {
-                // Показать индикатор загрузки
                 const loader = document.getElementById('loader');
                 loader.style.display = 'block';
 
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    loader.style.display = 'none'; // Скрыть индикатор загрузки после завершения чтения
+                    loader.style.display = 'none';
 
-                    // Запросить у пользователя название и описание для загруженного файла
                     const title = prompt("Введите название для загружаемой фотографии:");
                     const description = prompt("Введите описание для загружаемой фотографии:");
 
                     if (title && description) {
-                        // Добавить фото в галерею
                         addImageToGallery(e.target.result, title, description);
                     } else {
                         alert('Название и описание являются обязательными для добавления в галерею.');
@@ -86,6 +84,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Добавляем обработчик для закрытия модального окна
+    const closeModal = document.getElementById('closeModal');
+    const imageModal = document.getElementById('imageModal');
+    if (closeModal && imageModal) {
+        closeModal.addEventListener('click', () => {
+            imageModal.style.display = 'none';
+        });
+    }
+
+    // Закрытие модального окна при клике вне изображения
+    window.addEventListener('click', (event) => {
+        if (event.target === imageModal) {
+            imageModal.style.display = 'none';
+        }
+    });
 });
 
 // Функция для добавления изображения в галерею
@@ -103,5 +117,21 @@ function addImageToGallery(imageSrc, title, description) {
         </div>
     `;
 
+    // Добавляем событие клика для открытия изображения в модальном окне
+    const cardImage = card.querySelector('.card__image');
+    cardImage.addEventListener('click', () => {
+        openImageModal(imageSrc);
+    });
+
     gallery.appendChild(card);
+}
+
+// Функция для открытия изображения в модальном окне
+function openImageModal(imageSrc) {
+    const imageModal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    if (imageModal && modalImage) {
+        modalImage.src = imageSrc;
+        imageModal.style.display = 'block';
+    }
 }
