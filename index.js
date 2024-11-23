@@ -110,28 +110,24 @@ function addImageToGallery(imageSrc, title, description) {
     card.classList.add('card');
 
     card.innerHTML = `
-        <img src="${imageSrc}" alt="${title}" class="card__image">
+        <img src="${imageSrc}" alt="${title}" class="card__image" tabindex="0">
         <div class="card__content">
             <p class="card__title">${title}</p>
             <p class="card__description">${description}</p>
         </div>
     `;
 
-    // Добавляем событие клика для открытия изображения в модальном окне
+    // Добавляем событие клика для открытия изображения в новой директории
     const cardImage = card.querySelector('.card__image');
-    cardImage.addEventListener('click', () => {
-        openImageModal(imageSrc);
-    });
+    if (cardImage) {
+        cardImage.addEventListener('click', () => {
+            const imageUrlEncoded = encodeURIComponent(imageSrc);
+            const imageNameEncoded = encodeURIComponent(title);
+            // Используем относительный путь для открытия viewImage.html
+            const newUrl = `viewImage.html?src=${imageUrlEncoded}&name=${imageNameEncoded}`;
+            window.open(newUrl, '_blank');
+        });
+    }
 
     gallery.appendChild(card);
-}
-
-// Функция для открытия изображения в модальном окне
-function openImageModal(imageSrc) {
-    const imageModal = document.getElementById('imageModal');
-    const modalImage = document.getElementById('modalImage');
-    if (imageModal && modalImage) {
-        modalImage.src = imageSrc;
-        imageModal.style.display = 'block';
-    }
 }

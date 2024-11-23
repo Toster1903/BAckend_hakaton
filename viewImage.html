@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Просмотр изображения</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="image-container">
+    <img id="viewedImage" alt="Просмотр изображения">
+    <p id="imageTitle"></p>
+</div>
+
+<script>
+    // Получаем параметры из URL
+    const params = new URLSearchParams(window.location.search);
+    const imageUrl = params.get('src');
+    const imageName = params.get('name');
+
+    if (imageUrl && imageName) {
+        document.getElementById('viewedImage').src = imageUrl;
+        document.getElementById('imageTitle').innerText = imageName;
+    } else {
+        document.body.innerHTML = '<p>Изображение не найдено</p>';
+    }
+</script>
+</body>
+</html>
