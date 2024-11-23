@@ -12,10 +12,20 @@
     <link rel="stylesheet" href="css/loader.css"> <!-- Подключение файла со стилями загрузчика -->
 </head>
 <body>
-<!-- Вкладки -->
-<div class="tabs">
-    <button class="btn active" id="galleryTab">Галерея</button>
-    <button class="btn" id="uploadTab">Загрузка фото</button>
+<!-- Контейнер вкладок -->
+<div class="container">
+    <div class="tabs">
+        <!-- Вкладка Галерея -->
+        <input type="radio" id="radio-gallery" name="tabs" checked="">
+        <label class="tab" for="radio-gallery">Галерея</label>
+
+        <!-- Вкладка Загрузка Фото -->
+        <input type="radio" id="radio-upload" name="tabs">
+        <label class="tab" for="radio-upload">Загрузка фото</label>
+
+        <!-- Ползунок для переключения вкладок -->
+        <span class="glider"></span>
+    </div>
 </div>
 
 <!-- Вкладка Галерея -->
@@ -54,8 +64,6 @@
             <p>Click to upload</p>
         </button>
         <input id="file" type="file" style="display: none;">
-
-
 
         <!-- Индикатор загрузки -->
         <div id="loader" class="loader" style="display: none;">

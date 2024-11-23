@@ -1,50 +1,22 @@
-// Функция для переключения вкладок
-function openTab(tabName) {
-    console.log(`Открытие вкладки: ${tabName}`);
 
-    // Скрываем все вкладки
-    const tabContents = document.querySelectorAll('.tab-content');
-    tabContents.forEach((content) => {
-        content.style.display = 'none';
-        content.classList.remove('active');
-    });
-
-    // Убираем класс 'active' у всех кнопок
-    const tabButtons = document.querySelectorAll('.btn');
-    tabButtons.forEach((button) => {
-        button.classList.remove('active');
-    });
-
-    // Показываем выбранную вкладку и делаем кнопку активной
-    const tabContent = document.getElementById(tabName);
-    if (tabContent) {
-        tabContent.style.display = 'block';
-        tabContent.classList.add('active');
-    }
-
-    // Добавляем класс 'active' на кнопку соответствующей вкладки
-    const activeButton = document.querySelector(`#${tabName}Tab`);
-    if (activeButton) {
-        activeButton.classList.add('active');
-    }
-}
 
 document.addEventListener('DOMContentLoaded', () => {
-
     console.log("DOM полностью загружен и разобран");
 
-    const galleryTabButton = document.getElementById('galleryTab');
-    const uploadTabButton = document.getElementById('uploadTab');
+    // Переключение вкладок на основе радиокнопок
+    const tabRadios = document.querySelectorAll('input[name="tabs"]');
 
-    if (galleryTabButton) {
-        galleryTabButton.addEventListener('click', () => openTab('gallery'));
-    }
-    if (uploadTabButton) {
-        uploadTabButton.addEventListener('click', () => openTab('upload'));
-    }
+    tabRadios.forEach((radio) => {
+        radio.addEventListener('change', () => {
+            const tabName = radio.id.replace('radio-', ''); // Получаем имя вкладки (gallery или upload)
+            openTab(tabName);
+        });
+    });
 
+    // Открыть вкладку "Галерея" по умолчанию
     openTab('gallery');
 
+    // Обработчик для кнопки "Загрузка фото"
     const uploadButton = document.getElementById('uploadButton');
     if (uploadButton) {
         uploadButton.addEventListener('click', () => {
@@ -57,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Обработчик для выбора файла и загрузки фото
     const fileInput = document.getElementById('file');
     if (fileInput) {
         fileInput.addEventListener('change', (event) => {
@@ -101,6 +74,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// Функция для переключения вкладок
+function openTab(tabName) {
+    console.log(`Открытие вкладки: ${tabName}`);
+
+    // Скрываем все вкладки
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach((content) => {
+        content.style.display = 'none';
+        content.classList.remove('active');
+    });
+
+    // Показываем выбранную вкладку
+    const tabContent = document.getElementById(tabName);
+    if (tabContent) {
+        tabContent.style.display = 'block';
+        tabContent.classList.add('active');
+    }
+}
 
 // Функция для добавления изображения в галерею
 function addImageToGallery(imageSrc, title, description) {

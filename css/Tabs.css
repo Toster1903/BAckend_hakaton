@@ -1,55 +1,67 @@
-/* Стили для вкладок */
-/* Стили для вкладок */
+/* Основной контейнер для вкладок */
 .tabs {
     display: flex;
-    gap: 20px;
-    justify-content: center;
-    margin-bottom: 20px;
-    background-color: #e0f7ff; /* Светло-голубой цвет */
-    padding: 10px; /* Дополнительное пространство вокруг вкладок */
-    border-radius: 10px; /* Закругление краев полоски вкладок */
-}
-
-/* Стили кнопок вкладок */
-.btn {
     position: relative;
-    font-size: 17px;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 1em 2.5em;
-    display: inline-block;
-    cursor: pointer;
-    border-radius: 6em;
-    transition: all 0.2s;
-    border: none;
-    font-family: inherit;
-    font-weight: 500;
-    color: black;
-    background-color: white;
+    background-color: #fff;
+    box-shadow: 0 0 1px 0 rgba(24, 94, 224, 0.15), 0 6px 12px 0 rgba(24, 94, 224, 0.15);
+    padding: 0.75rem;
+    border-radius: 99px;
 }
 
-.btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+/* Все элементы внутри вкладок имеют z-index 2 для корректного отображения */
+.tabs * {
+    z-index: 2;
 }
 
-.btn:active {
-    transform: translateY(-1px);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* Стили активной вкладки */
-.btn.active {
-    background-color: #e0f7ff; /* Светло-голубой цвет для активной вкладки */
-    color: black; /* Цвет текста, чтобы кнопка была читаемой */
-}
-
-
-/* Скрытие содержимого вкладок */
-.tab-content {
+/* Убираем отображение radio input */
+.container input[type="radio"] {
     display: none;
 }
 
-.tab-content.active {
-    display: block;
+/* Стиль для самих вкладок */
+.tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 120px;
+    font-size: 1rem;
+    color: black;
+    font-weight: 500;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: color 0.15s ease-in;
+}
+
+/* Когда вкладка выбрана */
+.container input[type="radio"]:checked + label {
+    color: #185ee0;
+}
+
+/* Стиль для ползунка, который указывает текущую вкладку */
+.glider {
+    position: absolute;
+    display: flex;
+    height: 40px;
+    width: 120px;
+    background-color: #e6eef9;
+    z-index: 1;
+    border-radius: 99px;
+    transition: 0.25s ease-out;
+}
+
+/* Перемещение ползунка в зависимости от выбранной вкладки */
+.container input[id="radio-gallery"]:checked ~ .glider {
+    transform: translateX(0%);
+}
+
+.container input[id="radio-upload"]:checked ~ .glider {
+    transform: translateX(100%);
+}
+
+/* Стиль для мобильных устройств - уменьшение масштаба вкладок */
+@media (max-width: 700px) {
+    .tabs {
+        transform: scale(0.8);
+    }
 }
